@@ -1,0 +1,18 @@
+<div class="video-container" *ngIf="!enInicio">
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="video-fondo.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay-canva">
+    <p class="welcome-text">BIENVENIDO A</p>
+    <h1 class="main-title">SAMARANA</h1>
+    <p class="subtitle-text">ALOJAMIENTOS</p>
+
+    <div class="button-group">
+      <button class="btn-canva" (click)="entrar()">SABER MÁS</button>
+      <button class="btn-canva" (click)="irLogin()">INICIAR SESIÓN</button>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
