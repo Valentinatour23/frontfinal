@@ -1,0 +1,61 @@
+<div class="reserva-container">
+  <h2 class="reserva-titulo">DISPONIBILIDAD</h2>
+  <p class="reserva-subtitulo">Seleccioná las fechas de tu estadía</p>
+
+  <div class="selector-bungalow">
+    <button class="btn-bungalow" [class.activo]="bungalowSeleccionado === 1"
+      (click)="seleccionarBungalow(1)">BUNGALOW 1</button>
+    <button class="btn-bungalow" [class.activo]="bungalowSeleccionado === 2"
+      (click)="seleccionarBungalow(2)">BUNGALOW 2</button>
+  </div>
+
+  <div class="calendario-wrapper">
+    <div class="cal-header">
+      <button class="cal-nav" (click)="mesAnterior()">&#8249;</button>
+      <span class="cal-mes-anio">{{ nombreMes }} {{ anioActual }}</span>
+      <button class="cal-nav" (click)="mesSiguiente()">&#8250;</button>
+    </div>
+
+    <div class="cal-grid">
+      <div class="cal-dia-nombre" *ngFor="let d of diasSemana">{{ d }}</div>
+      <div class="cal-dia-vacio" *ngFor="let v of vacios"></div>
+      <div class="cal-dia"
+        *ngFor="let dia of diasDelMes"
+        [class.ocupado]="estaOcupado(dia)"
+        [class.seleccionado]="estaSeleccionado(dia)"
+        [class.en-rango]="estaEnRango(dia)"
+        [class.pasado]="esPasado(dia)"
+        (click)="seleccionarDia(dia)">
+        {{ dia }}
+      </div>
+    </div>
+
+    <div class="leyenda">
+      <span class="leyenda-item"><span class="dot disponible"></span>Disponible</span>
+      <span class="leyenda-item"><span class="dot ocupado"></span>Ocupado</span>
+      <span class="leyenda-item"><span class="dot seleccionado"></span>Seleccionado</span>
+    </div>
+  </div>
+
+  <div class="resumen" *ngIf="fechaEntrada">
+    <div class="resumen-fila">
+      <span class="resumen-label">ENTRADA</span>
+      <span class="resumen-valor">{{ fechaEntrada | date:'dd/MM/yyyy' }}</span>
+    </div>
+    <div class="resumen-fila" *ngIf="fechaSalida">
+      <span class="resumen-label">SALIDA</span>
+      <span class="resumen-valor">{{ fechaSalida | date:'dd/MM/yyyy' }}</span>
+    </div>
+    <div class="resumen-fila" *ngIf="fechaSalida">
+      <span class="resumen-label">NOCHES</span>
+      <span class="resumen-valor">{{ cantidadNoches }}</span>
+    </div>
+    <button class="btn-reservar" *ngIf="fechaSalida" (click)="confirmarReserva()">
+      CONSULTAR POR WHATSAPP
+    </button>
+    <button class="btn-limpiar" (click)="limpiarSeleccion()">Limpiar selección</button>
+  </div>
+
+  <div class="cargando" *ngIf="cargando">Cargando disponibilidad...</div>
+  <div class="error-msg" *ngIf="errorMsg">{{ errorMsg }}</div>
+</div>

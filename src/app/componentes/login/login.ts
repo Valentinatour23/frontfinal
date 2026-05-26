@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
-
   usuario: string = '';
   contrasena: string = '';
   error: string = '';
@@ -25,14 +25,18 @@ export class LoginComponent {
       this.error = 'Completá todos los campos';
       return;
     }
-
     this.cargando = true;
     this.error = '';
 
     this.authService.login(this.usuario, this.contrasena).subscribe({
       next: (res) => {
         this.authService.guardarToken(res.token);
-        this.router.navigate(['/info-alojamiento']);
+        const rol = res.rol;
+        if (rol === 'ADMIN') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/info-alojamiento']);
+        }
       },
       error: () => {
         this.error = 'Usuario o contraseña incorrectos';
