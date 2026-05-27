@@ -9,6 +9,10 @@ export class ReservaService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  crearReserva(reserva: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/crear`, reserva);
+  }
+
   getDisponibilidad(bungalowId: number): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/disponibilidad?bungalowId=${bungalowId}`);
   }

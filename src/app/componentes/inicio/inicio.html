@@ -15,31 +15,27 @@
     </div>
   </section>
 
-  <!-- TODO LO QUE APARECE AL APRETAR SABER MÁS -->
   <div *ngIf="mostrarContenido">
 
     <!-- SECCIÓN 2: Video cabaña + Navbar -->
-   <section class="hero-cabanas" id="seccion-cabanas">
-  <video autoplay muted loop playsinline id="video-inicio-principal">
-    <source src="videos/video-inicio-principal.mp4" type="video/mp4">
-  </video>
-
-  <nav class="nav-samarana">
-    <div class="nav-izq">
-      <a routerLink="/inicio" class="btn-nav btn-nav-activo">INICIO</a>
-      <a routerLink="/contacto" class="btn-nav">CONTACTO</a>
-    </div>
-
-    <div class="nav-centro">
-      <span class="letra-s">S</span>
-    </div>
-
-    <div class="nav-der">
-      <a routerLink="/turismo" class="btn-nav">TURISMO</a>
-      <a routerLink="/ubicacion" class="btn-nav">UBICACIÓN</a>
-    </div>
-  </nav>
-</section>
+    <section class="hero-cabanas" id="seccion-cabanas">
+      <video autoplay muted loop playsinline id="video-inicio-principal">
+        <source src="videos/video-inicio-principal.mp4" type="video/mp4">
+      </video>
+      <nav class="nav-samarana">
+        <div class="nav-izq">
+          <a routerLink="/inicio" class="btn-nav btn-nav-activo">INICIO</a>
+          <a routerLink="/contacto" class="btn-nav">CONTACTO</a>
+        </div>
+        <div class="nav-centro">
+          <span class="letra-s">S</span>
+        </div>
+        <div class="nav-der">
+          <a routerLink="/turismo" class="btn-nav">TURISMO</a>
+          <a routerLink="/ubicacion" class="btn-nav">UBICACIÓN</a>
+        </div>
+      </nav>
+    </section>
 
     <!-- SECCIÓN 3: Reseñas -->
     <section class="resenas-section">
@@ -91,20 +87,97 @@
     <!-- SECCIÓN 5: Reserva + Bungalows -->
     <section class="reserva-section">
       <div class="btn-seccion-wrapper">
-        <button class="btn-seccion">RESERVA</button>
+        <button class="btn-seccion" (click)="volverBungalows()">RESERVA</button>
       </div>
-      <div class="bungalows-grid">
-        <div class="bungalow-card" routerLink="/info-alojamiento">
+
+      <!-- CARDS -->
+      <div class="bungalows-grid" *ngIf="bungalowSeleccionado === null">
+        <div class="bungalow-card" (click)="seleccionarBungalow(0)">
           <div class="bungalow-img-placeholder">
             <span class="bungalow-label">BUNGALOW 1</span>
             <span class="bungalow-arrow">&#8594;</span>
           </div>
         </div>
-        <div class="bungalow-card" routerLink="/info-alojamiento">
+        <div class="bungalow-card" (click)="seleccionarBungalow(1)">
           <div class="bungalow-img-placeholder bungalow-2">
             <span class="bungalow-label">BUNGALOW 2</span>
             <span class="bungalow-arrow">&#8594;</span>
           </div>
+        </div>
+      </div>
+
+      <!-- FORMULARIO CON CALENDARIO -->
+      <div class="reserva-form-panel" *ngIf="bungalowSeleccionado !== null">
+        <div class="reserva-form-inner">
+
+          <button class="btn-volver-bungalows" (click)="volverBungalows()">
+            &#8592; Cambiar bungalow
+          </button>
+
+          <h3 class="reserva-form-titulo">
+            {{ bungalowSeleccionado === 0 ? 'Bungalow 1' : 'Bungalow 2' }}
+          </h3>
+
+          <div class="reserva-campos-top">
+            <div class="reserva-field">
+              <label>Nombre Completo</label>
+              <input type="text" [(ngModel)]="nuevaReserva.usuario.nombre_usuario" placeholder="Ej: Juan Pérez" class="reserva-input">
+            </div>
+            <div class="reserva-field">
+              <label>Teléfono</label>
+              <input type="tel" [(ngModel)]="nuevaReserva.telefono" placeholder="Ej: 3447123456" class="reserva-input">
+            </div>
+            <div class="reserva-field">
+              <label>Personas</label>
+              <input type="number" [(ngModel)]="nuevaReserva.cantidad_personas" min="1" max="10" class="reserva-input">
+            </div>
+          </div>
+
+          <!-- CALENDARIO -->
+          <div class="calendario-wrapper">
+            <div class="cal-nav">
+              <button class="cal-btn-nav" (click)="mesAnterior()">&#8249;</button>
+              <span class="cal-titulo">{{ nombreMes }} {{ anioActual }}</span>
+              <button class="cal-btn-nav" (click)="mesSiguiente()">&#8250;</button>
+            </div>
+            <div class="cal-grid">
+              <div class="cal-dia-header" *ngFor="let d of diasSemana">{{ d }}</div>
+              <div
+                *ngFor="let dia of diasCalendario"
+                class="cal-dia"
+                [class.vacio]="!dia"
+                [class.pasado]="dia && esPasado(dia)"
+                [class.inicio]="dia && esFechaInicio(dia)"
+                [class.fin]="dia && esFechaFin(dia)"
+                [class.en-rango]="dia && estaEnRango(dia)"
+                [class.hoy]="dia && esHoy(dia)"
+                (click)="dia && !esPasado(dia) && seleccionarFecha(dia)">
+                {{ dia ? dia.getDate() : '' }}
+              </div>
+            </div>
+          </div>
+
+          <!-- RESUMEN FECHAS -->
+          <div class="reserva-fechas-resumen" *ngIf="nuevaReserva.fecha_inicio || nuevaReserva.fecha_fin">
+            <div class="fecha-chip" *ngIf="nuevaReserva.fecha_inicio">
+              <span class="chip-label">Ingreso</span>
+              <span class="chip-valor">{{ nuevaReserva.fecha_inicio }}</span>
+            </div>
+            <div class="fecha-separador" *ngIf="nuevaReserva.fecha_inicio && nuevaReserva.fecha_fin">→</div>
+            <div class="fecha-chip" *ngIf="nuevaReserva.fecha_fin">
+              <span class="chip-label">Egreso</span>
+              <span class="chip-valor">{{ nuevaReserva.fecha_fin }}</span>
+            </div>
+            <button class="chip-limpiar" (click)="limpiarFechas()">✕ Limpiar</button>
+          </div>
+
+          <button
+            class="btn-reserva-confirmar"
+            [disabled]="!nuevaReserva.fecha_inicio || !nuevaReserva.fecha_fin || !nuevaReserva.usuario.nombre_usuario || !nuevaReserva.telefono"
+            (click)="procesarReserva()">
+            Confirmar por WhatsApp
+          </button>
+
         </div>
       </div>
     </section>
@@ -184,7 +257,7 @@
       </video>
       <div class="location-overlay">
         <div class="location-container-minimal">
-            <h2 class="location-title">SAMARANA</h2>
+          <h2 class="location-title">SAMARANA</h2>
           <div class="location-body">
             <div class="map-frame">
               <iframe
