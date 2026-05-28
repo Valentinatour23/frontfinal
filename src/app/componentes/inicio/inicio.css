@@ -23,6 +23,16 @@
 .bienvenido-texto { font-size: 0.8rem; letter-spacing: 6px; margin-bottom: 4px; }
 .titulo-samarana { font-size: 6rem; font-weight: 700; letter-spacing: 4px; line-height: 1; }
 .subtitulo-samarana { letter-spacing: 10px; font-size: 0.85rem; margin-top: 10px; margin-bottom: 40px; }
+.backend-status {
+  margin-bottom: 22px;
+  padding: 8px 16px;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 8px;
+  background: rgba(0,0,0,0.25);
+  color: white;
+  font-size: 0.8rem;
+}
+.backend-status-ok { background: rgba(38,108,71,0.55); }
 .botones-hero { display: flex; gap: 24px; }
 .btn-hero {
   padding: 14px 48px; background: rgba(244,238,232,0.18); color: white;

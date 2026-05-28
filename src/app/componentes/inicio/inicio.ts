@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AlojamientoService } from '../../services/alojamiento.service';
 import { ReservaService } from '../../services/reserva.service';
 import { Alojamiento } from '../../interfaces/alojamiento';
+import { Prueba } from '../../services/prueba';
 
 @Component({
   selector: 'app-inicio',
@@ -19,6 +20,8 @@ export class InicioComponent implements OnInit {
 
   listaAlojamientos: Alojamiento[] = [];
   mostrarContenido = false;
+  backendConectado = false;
+  mensajeBackend = 'Conectando con backend...';
   resenaActual = 0;
   bungalowSeleccionado: number | null = null;
 
@@ -63,10 +66,23 @@ export class InicioComponent implements OnInit {
 
   constructor(
     private _alojamientoService: AlojamientoService,
-    private _reservaService: ReservaService
+    private _reservaService: ReservaService,
+    private prueba: Prueba
   ) {}
 
   ngOnInit(): void {
+    this.prueba.probar().subscribe({
+      next: (respuesta) => {
+        this.mensajeBackend = respuesta;
+        this.backendConectado = true;
+      },
+      error: (err) => {
+        this.mensajeBackend = 'No se pudo conectar con el backend';
+        this.backendConectado = false;
+        console.error('Error conectando con el backend:', err);
+      }
+    });
+
     this._alojamientoService.alojamientos().subscribe({
       next: (data: Alojamiento[]) => { this.listaAlojamientos = data; },
       error: (err: any) => console.error('Error al conectar:', err)

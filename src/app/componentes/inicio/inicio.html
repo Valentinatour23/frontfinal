@@ -8,12 +8,21 @@
     <div class="hero-overlay">
       <h1 class="titulo-samarana">SAMARANA</h1>
       <p class="subtitulo-samarana">ALOJAMIENTOS</p>
+     
+     <!-- ESTO ES UNA PRUEBA PARA SABER SI EL BACK ESTA CONECTADO AL FRONT --> 
+
+     <p class="backend-status" [class.backend-status-ok]="backendConectado">
+        Backend: {{ mensajeBackend }}
+      </p>       
+      <!-- ----------------------------------------------------------------- --> 
+
       <div class="botones-hero">
         <button class="btn-hero" (click)="saberMas()">SABER MÁS</button>
         <button class="btn-hero" routerLink="/login">INICIAR SESIÓN</button>
       </div>
     </div>
   </section>
+  
 
   <div *ngIf="mostrarContenido">
 
