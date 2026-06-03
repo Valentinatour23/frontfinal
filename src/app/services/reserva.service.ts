@@ -25,7 +25,7 @@ export class ReservaService {
 
   cambiarEstado(idReserva: number, idNuevoEstado: number): Observable<any> {
     return this.http.put<any>(
-      `${this.apiUrl}/cambiar-estado/${idReserva}?idEstado=${idNuevoEstado}`,
+      `${this.apiUrl}/cambiar-estado/${idReserva}?nuevoEstado=${idNuevoEstado}`,
       {},
       { headers: this.getHeaders() }
     );

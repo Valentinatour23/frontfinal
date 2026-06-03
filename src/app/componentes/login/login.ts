@@ -29,17 +29,23 @@ export class LoginComponent {
     this.error = '';
 
     this.authService.login(this.usuario, this.contrasena).subscribe({
-      next: (res) => {
+        next: (res) => {
+
+        console.log('Respuesta:', res);
+
         this.authService.guardarToken(res.token);
-        const rol = res.rol;
-        if (rol === 'ADMIN') {
+
+        console.log('Rol detectado:',
+        this.authService.obtenerRol());
+
+      if (res.rol === 'ADMIN') {
           this.router.navigate(['/admin']);
         } else {
-          this.router.navigate(['/info-alojamiento']);
+         this.router.navigate(['/home'], {fragment: 'sobre-samarana'});
         }
       },
       error: () => {
-        this.error = 'Usuario o contraseña incorrectos';
+        this.error = 'Usuario o contraseña incorrectos.';
         this.cargando = false;
       }
     });

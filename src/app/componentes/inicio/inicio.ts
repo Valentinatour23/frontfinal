@@ -7,6 +7,9 @@ import { AlojamientoService } from '../../services/alojamiento.service';
 import { ReservaService } from '../../services/reserva.service';
 import { Alojamiento } from '../../interfaces/alojamiento';
 import { Prueba } from '../../services/prueba';
+import { AfterViewInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-inicio',
@@ -16,6 +19,7 @@ import { Prueba } from '../../services/prueba';
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
 })
+
 export class InicioComponent implements OnInit {
 
   listaAlojamientos: Alojamiento[] = [];
@@ -67,10 +71,17 @@ export class InicioComponent implements OnInit {
   constructor(
     private _alojamientoService: AlojamientoService,
     private _reservaService: ReservaService,
-    private prueba: Prueba
+    private prueba: Prueba,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.route.fragment.subscribe(fragment => {
+    if (fragment) {
+      this.mostrarContenido = true;
+    }
+    });
+
     this.prueba.probar().subscribe({
       next: (respuesta) => {
         this.mensajeBackend = respuesta;
@@ -203,12 +214,12 @@ export class InicioComponent implements OnInit {
     this._reservaService.crearReserva(this.nuevaReserva).subscribe({
       next: (reservaGuardada: any) => {
         const mensaje = `Hola Samarana! Quiero confirmar mi reserva. 
-*Nro de Reserva:* #${reservaGuardada.id_reserva}
-*Alojamiento:* ${reservaGuardada.alojamiento.nombre}
-*Nombre:* ${reservaGuardada.usuario.nombre_usuario}
-*Desde:* ${reservaGuardada.fecha_inicio} 
-*Hasta:* ${reservaGuardada.fecha_fin}
-Adjunto el comprobante de pago.`;
+          *Nro de Reserva:* #${reservaGuardada.id_reserva}
+          *Alojamiento:* ${reservaGuardada.alojamiento.nombre}
+          *Nombre:* ${reservaGuardada.usuario.nombre_usuario}
+          *Desde:* ${reservaGuardada.fecha_inicio} 
+          *Hasta:* ${reservaGuardada.fecha_fin}
+          Adjunto el comprobante de pago.`;
 
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=5493447542330&text=${encodeURIComponent(mensaje)}`;
         window.open(urlWhatsApp, '_blank');
@@ -216,4 +227,6 @@ Adjunto el comprobante de pago.`;
       error: (err: any) => console.error('Error al crear reserva:', err)
     });
   }
+
+
 }
