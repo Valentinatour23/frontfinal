@@ -52,7 +52,7 @@ export class InicioComponent implements OnInit {
     fecha_fin: '',
     cantidad_personas: 1,
     alojamiento: null as any,
-    usuario: { nombre_usuario: '' }
+    usuario: { usuario: '' }
   };
 
   // ── Calendario ──
@@ -81,7 +81,8 @@ export class InicioComponent implements OnInit {
       this.mostrarContenido = true;
     }
     });
-
+    
+    /*
     this.prueba.probar().subscribe({
       next: (respuesta) => {
         this.mensajeBackend = respuesta;
@@ -92,7 +93,7 @@ export class InicioComponent implements OnInit {
         this.backendConectado = false;
         console.error('Error conectando con el backend:', err);
       }
-    });
+    });   */
 
     this._alojamientoService.alojamientos().subscribe({
       next: (data: Alojamiento[]) => { this.listaAlojamientos = data; },
@@ -215,8 +216,8 @@ export class InicioComponent implements OnInit {
       next: (reservaGuardada: any) => {
         const mensaje = `Hola Samarana! Quiero confirmar mi reserva. 
           *Nro de Reserva:* #${reservaGuardada.id_reserva}
-          *Alojamiento:* ${reservaGuardada.alojamiento.nombre}
-          *Nombre:* ${reservaGuardada.usuario.nombre_usuario}
+          *Alojamiento:* ${reservaGuardada.alojamiento.nombre_alojamiento}
+          *Nombre:* ${reservaGuardada.usuario.usuario}
           *Desde:* ${reservaGuardada.fecha_inicio} 
           *Hasta:* ${reservaGuardada.fecha_fin}
           Adjunto el comprobante de pago.`;
@@ -224,7 +225,11 @@ export class InicioComponent implements OnInit {
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=5493447542330&text=${encodeURIComponent(mensaje)}`;
         window.open(urlWhatsApp, '_blank');
       },
-      error: (err: any) => console.error('Error al crear reserva:', err)
+        error: (err: any) => {
+        console.error('Error al crear reserva:', err);
+        // Cartel emergente para superposición de reservas
+        alert('Lo sentimos. Las fechas seleccionadas ya se encuentran reservadas para este bungalow. Por favor, seleccioná otro período.');
+      }
     });
   }
 

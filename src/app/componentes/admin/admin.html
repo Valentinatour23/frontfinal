@@ -22,7 +22,7 @@
         @for (res of listaReservas; track res.id_reserva) {
           <tr>
             <td><strong>#{{ res.id_reserva }}</strong></td>
-            <td>{{ res.usuario?.nombre_usuario || 'Sin registrar' }}</td>
+            <td>{{ res.usuario?.usuario || 'Sin registrar' }}</td>
             <td>{{ res.alojamiento?.nombre_alojamiento }}</td>
             <td>{{ res.fecha_inicio | date:'dd/MM/yyyy' }}</td>
             <td>{{ res.fecha_fin | date:'dd/MM/yyyy' }}</td>

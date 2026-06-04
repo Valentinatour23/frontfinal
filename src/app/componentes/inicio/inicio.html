@@ -131,7 +131,7 @@
           <div class="reserva-campos-top">
             <div class="reserva-field">
               <label>Nombre Completo</label>
-              <input type="text" [(ngModel)]="nuevaReserva.usuario.nombre_usuario" placeholder="Ej: Juan Pérez" class="reserva-input">
+              <input type="text" [(ngModel)]="nuevaReserva.usuario.usuario" placeholder="Ej: Juan Pérez" class="reserva-input">
             </div>
             <div class="reserva-field">
               <label>Teléfono</label>
@@ -183,7 +183,7 @@
 
           <button
             class="btn-reserva-confirmar"
-            [disabled]="!nuevaReserva.fecha_inicio || !nuevaReserva.fecha_fin || !nuevaReserva.usuario.nombre_usuario || !nuevaReserva.telefono"
+            [disabled]="!nuevaReserva.fecha_inicio || !nuevaReserva.fecha_fin || !nuevaReserva.usuario.usuario || !nuevaReserva.telefono"
             (click)="procesarReserva()">
             Confirmar por WhatsApp
           </button>

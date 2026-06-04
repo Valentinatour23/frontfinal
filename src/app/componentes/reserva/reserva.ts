@@ -53,12 +53,12 @@ export class Reserva implements OnInit {
         console.log('Reserva creada en BD con éxito:', reservaGuardada);
 
         const mensaje = `Hola Samarana! Quiero confirmar mi reserva. 
-*Nro de Reserva:* #${reservaGuardada.id_reserva}
-*Alojamiento:* ${reservaGuardada.alojamiento.nombre}
-*Nombre:* ${reservaGuardada.usuario.nombre_usuario}
-*Desde:* ${reservaGuardada.fecha_inicio} 
-*Hasta:* ${reservaGuardada.fecha_fin}
-Adjunto el comprobante de pago.`;
+        *Nro de Reserva:* #${reservaGuardada.id_reserva}
+        *Alojamiento:* ${reservaGuardada.alojamiento.nombre}
+        *Nombre:* ${reservaGuardada.usuario.usuario}
+        *Desde:* ${reservaGuardada.fecha_inicio} 
+        *Hasta:* ${reservaGuardada.fecha_fin}
+        Adjunto el comprobante de pago.`;
 
         const numeroTelefono = '5493447542330';
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTelefono}&text=${encodeURIComponent(mensaje)}`;
