@@ -11,13 +11,17 @@ import { AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-inicio',
   standalone: true,
   imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
+
   providers: [AlojamientoService],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
+  
+  
 })
 
 export class InicioComponent implements OnInit {

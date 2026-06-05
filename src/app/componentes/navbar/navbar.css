@@ -7,10 +7,12 @@
   width: 100%;
 }
 
+
 .nav-links {
   display: flex;
   gap: 30px;
 }
+
 
 .nav-item {
   color: white;
@@ -22,10 +24,12 @@
   font-size: 0.9rem;
 }
 
+
 .nav-item.active {
   background-color: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
 
 /* --- ESTILO DE LA "S" Y EL SOL --- */
 .nav-logo {
@@ -36,6 +40,7 @@
   justify-content: center;
 }
 
+
 .logo-letter {
   font-family: 'Playfair Display', serif; /* Una fuente elegante con "patitas" */
   font-size: 3.5rem;
@@ -45,6 +50,7 @@
   margin-top: -10px;
 }
 
+
 .sun-draw {
   width: 50px;
   height: 25px;
@@ -53,6 +59,7 @@
   border-radius: 50px 50px 0 0; /* Medio círculo */
   position: relative;
 }
+
 
 .sun-draw::after {
   content: '';
@@ -65,3 +72,4 @@
   background: white;
   box-shadow: 15px 5px 0 white, -15px 5px 0 white, 25px 15px 0 white, -25px 15px 0 white;
 }
+
