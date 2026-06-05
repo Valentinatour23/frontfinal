@@ -26,7 +26,7 @@
   padding: 8px 15px;
   border-radius: 10px;
   font-size: 0.9rem;
-  transition: background 0.2s;
+  transition: background 0.25s;
 }
 
 .nav-item:hover {

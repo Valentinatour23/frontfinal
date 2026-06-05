@@ -28,7 +28,7 @@
     <!-- SECCIÓN 3: Reseñas -->
     <section class="resenas-section">
       <div class="resenas-wrapper">
-        <button class="flecha-resena" (click)="anteriorResena()">&#8249;</button>
+        <button class="flecha-resena" (click)="anteriorResena()">‹</button>
         <div class="resenas-container">
           <div class="resena-card" *ngFor="let r of resenas; let i = index"
             [class.resena-activa]="i === resenaActual">
@@ -44,7 +44,7 @@
             <p class="resena-texto">{{ r.texto }}</p>
           </div>
         </div>
-        <button class="flecha-resena" (click)="siguienteResena()">&#8250;</button>
+        <button class="flecha-resena" (click)="siguienteResena()">›</button>
       </div>
     </section>
 
@@ -84,13 +84,13 @@
         <div class="bungalow-card" (click)="seleccionarBungalow(0)">
           <div class="bungalow-img-placeholder">
             <span class="bungalow-label">BUNGALOW 1</span>
-            <span class="bungalow-arrow">&#8594;</span>
+            <span class="bungalow-arrow">→</span>
           </div>
         </div>
         <div class="bungalow-card" (click)="seleccionarBungalow(1)">
           <div class="bungalow-img-placeholder bungalow-2">
             <span class="bungalow-label">BUNGALOW 2</span>
-            <span class="bungalow-arrow">&#8594;</span>
+            <span class="bungalow-arrow">→</span>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@
         <div class="reserva-form-inner">
 
           <button class="btn-volver-bungalows" (click)="volverBungalows()">
-            &#8592; Cambiar bungalow
+            ← Cambiar bungalow
           </button>
 
           <h3 class="reserva-form-titulo">
@@ -128,9 +128,9 @@
           <!-- CALENDARIO -->
           <div class="calendario-wrapper">
             <div class="cal-nav">
-              <button class="cal-btn-nav" (click)="mesAnterior()">&#8249;</button>
+              <button class="cal-btn-nav" (click)="mesAnterior()">‹</button>
               <span class="cal-titulo">{{ nombreMes }} {{ anioActual }}</span>
-              <button class="cal-btn-nav" (click)="mesSiguiente()">&#8250;</button>
+              <button class="cal-btn-nav" (click)="mesSiguiente()">›</button>
             </div>
             <div class="cal-grid">
               <div class="cal-dia-header" *ngFor="let d of diasSemana">{{ d }}</div>

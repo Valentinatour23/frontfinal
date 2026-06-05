@@ -1,26 +1,24 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule],
   templateUrl: './navbar.html',
-  styleUrls: ['./navbar.css']
+  styleUrls: ['./navbar.css'] // Si usas estilos en otro archivo, si no dejalos como los tenías
 })
 export class NavbarComponent {
 
-  irA(seccion: string): void {
-    const elemento = document.getElementById(seccion);
+  // Esta función hace el scroll suave a Inicio, Contacto y Ubicación
+  irA(idSeccion: string) {
+    const elemento = document.getElementById(idSeccion);
     if (elemento) {
-      elemento.scrollIntoView({ behavior: 'smooth' });
+      elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      console.warn(`No se encontró la sección con el id: ${idSeccion}`);
     }
   }
 
-  irTurismo(): void {
-    window.open(
-      'https://www.turismoentrerios.com/sanjose/',
-      '_blank'
-    );
+  // Esta función abre el blog de turismo oficial de San José
+  irTurismo() {
+    window.open('https://www.sanjose.tur.ar/', '_blank');
   }
 }

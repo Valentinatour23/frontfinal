@@ -8,12 +8,12 @@ import { ReservaService } from '../../services/reserva.service';
 import { Alojamiento } from '../../interfaces/alojamiento';
 import { Prueba } from '../../services/prueba';
 import { ActivatedRoute } from '@angular/router';
-import { NavbarComponent } from '../navbar/navbar'; 
+import { NavbarComponent } from '../navbar/navbar';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule, NavbarComponent], // ← AGREGAR NavbarComponent
   providers: [AlojamientoService],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
