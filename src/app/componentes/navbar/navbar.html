@@ -1,10 +1,13 @@
-<nav class="navbar">
-  <div class="logo">SAMARANA</div>
-  <ul class="nav-links">
-    <li><a routerLink="/inicio">INICIO</a></li>
-    <li><a routerLink="/alojamientos">ALOJAMIENTOS</a></li>
-    <li><a routerLink="/contacto">CONTACTO</a></li>
-    <li><a routerLink="/turismo">TURISMO</a></li>
-    <li><a routerLink="/ubicacion">UBICACIÓN</a></li>
-  </ul>
+<nav class="navbar-samarana">
+  <div class="nav-links">
+    <a class="nav-item nav-item-activo" (click)="irA('inicio')">INICIO</a>
+    <a class="nav-item" (click)="irA('contacto')">CONTACTO</a>
+  </div>
+  <div class="nav-logo">
+    <span class="logo-letter">S</span>
+  </div>
+  <div class="nav-links">
+    <a class="nav-item" (click)="irTurismo()">TURISMO</a>
+    <a class="nav-item" (click)="irA('ubicacion')">UBICACIÓN</a>
+  </div>
 </nav>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -7,21 +7,16 @@ import { AlojamientoService } from '../../services/alojamiento.service';
 import { ReservaService } from '../../services/reserva.service';
 import { Alojamiento } from '../../interfaces/alojamiento';
 import { Prueba } from '../../services/prueba';
-import { AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-
+import { NavbarComponent } from '../navbar/navbar';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
-
+  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule, NavbarComponent], // ← AGREGAR NavbarComponent
   providers: [AlojamientoService],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
-  
-  
 })
 
 export class InicioComponent implements OnInit {
