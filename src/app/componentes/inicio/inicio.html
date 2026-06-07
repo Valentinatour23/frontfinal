@@ -25,28 +25,60 @@
       <app-navbar></app-navbar>
     </section>
 
-    <!-- SECCIÓN 3: Reseñas -->
-    <section class="resenas-section">
-      <div class="resenas-wrapper">
-        <button class="flecha-resena" (click)="anteriorResena()">‹</button>
-        <div class="resenas-container">
-          <div class="resena-card" *ngFor="let r of resenas; let i = index"
-            [class.resena-activa]="i === resenaActual">
-            <div class="resena-header">
-              <div class="resena-avatar">{{ r.inicial }}</div>
-              <div>
-                <p class="resena-nombre">{{ r.nombre }}</p>
-                <p class="resena-meta">{{ r.meta }}</p>
-                <div class="resena-estrellas">★★★★★</div>
-                <p class="resena-tiempo">{{ r.tiempo }}</p>
-              </div>
-            </div>
-            <p class="resena-texto">{{ r.texto }}</p>
+   <!-- SECCIÓN 3: Reseñas -->
+<section class="resenas-section">
+  <div class="resenas-wrapper">
+    
+    <button class="flecha-resena" (click)="anteriorResena()">&#8249;</button>
+
+    <div class="resenas-container">
+      <div class="resena-card" *ngFor="let i of [0,1,2]">
+        <div class="resena-header">
+          <div class="resena-avatar">{{ resenas[(resenaActual + i) % resenas.length].inicial }}</div>
+          <div>
+            <p class="resena-nombre">{{ resenas[(resenaActual + i) % resenas.length].nombre }}</p>
+            <p class="resena-meta">{{ resenas[(resenaActual + i) % resenas.length].meta }}</p>
+            <div class="resena-estrellas">★★★★★</div>
+            <p class="resena-tiempo">{{ resenas[(resenaActual + i) % resenas.length].tiempo }}</p>
           </div>
         </div>
-        <button class="flecha-resena" (click)="siguienteResena()">›</button>
+        <p class="resena-texto">{{ resenas[(resenaActual + i) % resenas.length].texto }}</p>
       </div>
-    </section>
+    </div>
+
+    <button class="flecha-resena" (click)="siguienteResena()">&#8250;</button>
+
+  </div>
+
+  <!-- FORMULARIO AGREGAR COMENTARIO -->
+  <div class="agregar-resena-wrapper">
+    <button class="btn-agregar-resena" (click)="mostrarFormResena = !mostrarFormResena">
+      {{ mostrarFormResena ? '✕ Cancelar' : '+ Dejá tu opinión' }}
+    </button>
+
+    <div class="form-resena" *ngIf="mostrarFormResena">
+      <div class="form-resena-row">
+        <input 
+          type="text" 
+          [(ngModel)]="nuevaResena.nombre" 
+          placeholder="Tu nombre" 
+          class="resena-input-field">
+        <input 
+          type="text" 
+          [(ngModel)]="nuevaResena.meta" 
+          placeholder="Ej: Viajé en familia" 
+          class="resena-input-field">
+      </div>
+      <textarea 
+        [(ngModel)]="nuevaResena.texto" 
+        placeholder="Contanos tu experiencia en Samarana..." 
+        class="resena-textarea"
+        rows="3">
+      </textarea>
+      <button class="btn-enviar-resena" (click)="agregarResena()">Publicar opinión</button>
+    </div>
+  </div>
+</section>
 
     <!-- SECCIÓN 4: Más que una estadía -->
     <section id="sobre-samarana" class="detalle-informativo">
@@ -281,41 +313,61 @@
 
     <!-- FOOTER -->
     <footer class="footer-samarana" id="contacto">
-      <div class="social-links">
-        <a href="mailto:tuemail@gmail.com" class="social-item" title="Email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" width="20" height="20">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <polyline points="2,4 12,13 22,4"/>
-          </svg>
-        </a>
-        <a href="https://instagram.com/" target="_blank"
-          class="social-item" title="Instagram">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" width="20" height="20">
-            <rect x="2" y="2" width="20" height="20" rx="5"/>
-            <circle cx="12" cy="12" r="5"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
-        <a href="https://facebook.com/" target="_blank"
-          class="social-item" title="Facebook">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" width="20" height="20">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg>
-        </a>
-        <a href="https://wa.me/549TUNUMERO" target="_blank"
-          class="social-item" title="WhatsApp">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            stroke-width="2" stroke-linecap="round" width="20" height="20">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7
-              a8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8
-              a8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-          </svg>
-        </a>
-      </div>
-    </footer>
-
+  <div class="footer-grid">
+    <!-- Columna 1: Logo -->
+    <div class="footer-col">
+      <span class="footer-logo">SAMARANA</span>
+      <p class="footer-frase">Un espacio pensado para el descanso y la desconexión en San José, Entre Ríos.</p>
+    </div>
+    <!-- Columna 2: Links -->
+    <div class="footer-col">
+      <span class="footer-titulo">Navegación</span>
+      <a class="footer-link" (click)="irAInicio()">Inicio</a>
+      <a class="footer-link" (click)="irAUbicacion()">Ubicación</a>
+      <a class="footer-link" (click)="irAContacto()">Contacto</a>
+      <a class="footer-link" (click)="irAReserva()">Reserva</a>
+    </div>
+    <!-- Columna 3: Contacto -->
+    <div class="footer-col">
+      <span class="footer-titulo">Contacto</span>
+      <div class="footer-contacto-item">📍 Ruta 130 km 5, San José, Entre Ríos</div>
+      <div class="footer-contacto-item">📞 +54 9 3447 542330</div>
+      <div class="footer-contacto-item">✉️ samarana@gmail.com</div>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom">
+    <a href="mailto:samarana@gmail.com" class="social-item" title="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20">
+        <rect x="2" y="4" width="20" height="16" rx="2"/>
+        <polyline points="2,4 12,13 22,4"/>
+      </svg>
+    </a>
+    <a href="https://instagram.com/" target="_blank" class="social-item" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="5"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a href="https://facebook.com/" target="_blank" class="social-item" title="Facebook">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+      </svg>
+    </a>
+    <a href="https://wa.me/5493447542330" target="_blank" class="social-item" title="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="20" height="20">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7a8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8a8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      </svg>
+    </a>
+  </div>
+</footer>
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a href="https://wa.me/5493447542330" target="_blank" class="whatsapp-float" *ngIf="mostrarContenido">
+  <svg viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.89.525 3.656 1.438 5.168L2 22l4.985-1.407A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 11.999 2zm.001 18a7.96 7.96 0 01-4.079-1.123l-.29-.173-3.005.849.838-3.077-.19-.314A7.961 7.961 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/>
+  </svg>
+</a>
   </div>
 </div>

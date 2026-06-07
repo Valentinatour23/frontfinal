@@ -6,7 +6,7 @@
   padding: 20px 10px;
   background: transparent;
   width: 100%;
-  position: absolute;
+  position: absolute; /* Restaurado como estaba originalmente */
   top: 0;
   left: 0;
   z-index: 10;

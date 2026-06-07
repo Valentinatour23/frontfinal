@@ -28,6 +28,11 @@ export class InicioComponent implements OnInit {
   resenaActual = 0;
   bungalowSeleccionado: number | null = null;
 
+  irAInicio(): void { document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' }); }
+irAUbicacion(): void { document.getElementById('ubicacion')?.scrollIntoView({ behavior: 'smooth' }); }
+irAContacto(): void { document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' }); }
+irAReserva(): void { document.querySelector('.reserva-section')?.scrollIntoView({ behavior: 'smooth' }); }
+
   resenas = [
     {
       inicial: 'L', nombre: 'Lorena Chaires', meta: '7 reseñas · 6 fotos',
@@ -44,7 +49,30 @@ export class InicioComponent implements OnInit {
       texto: 'Un lugar soñado. Perfecto para relajarse y disfrutar en pareja o en familia. Seguro volvemos pronto.'
     }
   ];
+mostrarFormResena = false;
 
+nuevaResena = {
+  nombre: '',
+  meta: '',
+  texto: '',
+  inicial: ''
+};
+
+agregarResena(): void {
+  if (!this.nuevaResena.nombre || !this.nuevaResena.texto) return;
+  
+  this.resenas.push({
+    inicial: this.nuevaResena.nombre.charAt(0).toUpperCase(),
+    nombre: this.nuevaResena.nombre,
+    meta: this.nuevaResena.meta || 'Huésped de Samarana',
+    tiempo: 'Ahora',
+    texto: this.nuevaResena.texto
+  });
+
+  this.nuevaResena = { nombre: '', meta: '', texto: '', inicial: '' };
+  this.mostrarFormResena = false;
+  this.resenaActual = this.resenas.length - 3;
+}
   nuevaReserva = {
     telefono: '',
     fecha_inicio: '',
