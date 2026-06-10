@@ -16,8 +16,16 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
+  guardarRol(rol: string): void {
+    localStorage.setItem('rol', rol);
+  }
+
   obtenerToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  obtenerRol(): string | null {
+    return localStorage.getItem('rol');
   }
 
   estaLogueado(): boolean {
@@ -26,17 +34,7 @@ export class AuthService {
 
   cerrarSesion(): void {
     localStorage.removeItem('token');
-  }
-
-  obtenerRol(): string | null {
-    const token = this.obtenerToken();
-    if (!token) return null;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.rol ?? null;
-    } catch {
-      return null;
-    }
+    localStorage.removeItem('rol');
   }
 
   esAdmin(): boolean {

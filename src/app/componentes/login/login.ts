@@ -29,19 +29,17 @@ export class LoginComponent {
     this.error = '';
 
     this.authService.login(this.usuario, this.contrasena).subscribe({
-        next: (res) => {
-
+      next: (res) => {
         console.log('Respuesta:', res);
-
         this.authService.guardarToken(res.token);
+        this.authService.guardarRol(res.rol);
+        console.log('Rol detectado:', this.authService.obtenerRol());
+        this.cargando = false;
 
-        console.log('Rol detectado:',
-        this.authService.obtenerRol());
-
-      if (res.rol === 'ADMIN') {
+        if (res.rol === 'ADMIN') {
           this.router.navigate(['/admin']);
         } else {
-         this.router.navigate(['/home'], {fragment: 'sobre-samarana'});
+          this.router.navigate(['/home'], {fragment: 'sobre-samarana'});
         }
       },
       error: () => {
