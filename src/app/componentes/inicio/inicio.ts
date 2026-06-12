@@ -49,6 +49,32 @@ irAReserva(): void { document.querySelector('.reserva-section')?.scrollIntoView(
       texto: 'Un lugar soñado. Perfecto para relajarse y disfrutar en pareja o en familia. Seguro volvemos pronto.'
     }
   ];
+  fotosCarrusel: string[] = [
+  'fotos/fotodepiscina.jpeg',
+  'fotos/foto2fondo.jpeg',
+  'fotos/1c832aa5-e17a-4062-89ea-3b3f560b45c5.jpg',
+  'fotos/5c7661e1-c6e9-46de-aab9-7c29ff0f5d25.jpg',
+  'fotos/5ed995e9-fbfc-441a-b5ae-649e7e90ac6f.jpg',
+  'fotos/8f6a6f92-0ea1-45cc-b93b-905e83c40758.jpg',
+  'fotos/94bfa2e6-d71a-4025-bca9-4df14c8f5baa.jpg',
+  'fotos/94c5827f-d82b-4f82-9d32-e145a6661b53.jpg',
+  'fotos/443f5b87-0b51-4ea0-8a1a-f37b4f83c823.jpg',
+  'fotos/958edcfb-b814-4200-93a1-d68588e284fd.jpg',
+  'fotos/cfbf2d66-274b-489f-a5f5-0bc342dcc9b7.jpg',
+  'fotos/df14f774-b5e3-4ffc-90cf-f4ec37ee8275.jpg',
+  'fotos/f5a3d284-1947-4667-862f-e1a0dc93f729.jpg',
+  'fotos/fa31592f-dc59-440c-bed8-7fec1734e259.jpg'
+];
+
+fotoActual: number = 0;
+
+siguienteFoto(): void {
+  this.fotoActual = (this.fotoActual + 1) % this.fotosCarrusel.length;
+}
+
+anteriorFoto(): void {
+  this.fotoActual = (this.fotoActual - 1 + this.fotosCarrusel.length) % this.fotosCarrusel.length;
+}
 mostrarFormResena = false;
 
 nuevaResena = {
