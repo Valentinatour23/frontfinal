@@ -871,3 +871,52 @@
   .footer-grid { grid-template-columns: 1fr; gap: 30px; }
   .whatsapp-float { bottom: 20px; right: 20px; }
 }
+
+/* ==========================================================================
+   CARTEL DE TARIFA DINÁMICA (CÁLCULO EN TIEMPO REAL)
+   ========================================================================== */
+.reserva-tarifa-resumen {
+  background-color: #fcf9f6; /* Un tono cremita muy suave */
+  border: 1px solid #eaddd3; /* Borde sutil a tono con el diseño */
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.tarifa-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.tarifa-label {
+  font-size: 0.85rem;
+  color: #b6a391; /* Tu color de texto secundario */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tarifa-monto {
+  font-size: 1.4rem;
+  color: #433529; /* Tu color marrón oscuro principal */
+  font-weight: 700;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.tarifa-aclaracion {
+  font-size: 0.72rem;
+  color: #a08e7e;
+  font-style: italic;
+  margin: 0;
+  text-align: right;
+}
+
+/* Animación sutil para cuando aparece el cartel */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

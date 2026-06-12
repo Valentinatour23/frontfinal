@@ -14,6 +14,7 @@
           <th>Ingreso</th>
           <th>Egreso</th>
           <th class="text-center">Pers.</th>
+          <th>Total a Pagar</th>
           <th>Estado</th>
           <th>Acciones</th>
         </tr>
@@ -27,7 +28,11 @@
             <td>{{ res.fecha_inicio | date:'dd/MM/yyyy' }}</td>
             <td>{{ res.fecha_fin | date:'dd/MM/yyyy' }}</td>
             <td class="text-center">{{ res.cantidad_personas }}</td>
+            <td style="font-weight: 600; color: #433529;">
+              ${{ res.total_tarifa | number:'1.0-0' }}
+            </td>
             <td>
+
               <span class="badge" [ngClass]="{
                 'badge-pendiente': res.estado?.id_estado === 1,
                 'badge-confirmada': res.estado?.id_estado === 2,
@@ -58,7 +63,7 @@
           </tr>
         } @empty {
           <tr>
-            <td colspan="8" class="text-center no-data">No hay registros de reservas cargados en el sistema.</td>
+            <td colspan="9" class="text-center no-data">No hay registros de reservas cargados en el sistema.</td>
           </tr>
         }
       </tbody>

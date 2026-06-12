@@ -79,8 +79,13 @@ agregarResena(): void {
     fecha_fin: '',
     cantidad_personas: 1,
     alojamiento: null as any,
-    usuario: { usuario: '' }
+    usuario: { usuario: '' },
+    total_tarifa: 0 // ← Sumamos este campo acá
   };
+  //varieables nuevas
+  tarifaEstimada: number = 0;
+  precioPorNocheCalculado: number = 0;
+nochesCalculadas: number = 0;
 
   // ── Calendario ──
   diasSemana = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'];
@@ -200,6 +205,7 @@ agregarResena(): void {
         this.nuevaReserva.fecha_fin = this.formatearFecha(dia);
       }
     }
+    this.calcularTarifa();
   }
 
   formatearFecha(d: Date): string {
@@ -213,6 +219,7 @@ agregarResena(): void {
     this.fechaFinDate = null;
     this.nuevaReserva.fecha_inicio = '';
     this.nuevaReserva.fecha_fin = '';
+    this.calcularTarifa(); // Sumamos esto
   }
 
   esPasado(dia: Date): boolean {
@@ -247,6 +254,7 @@ agregarResena(): void {
           *Nombre:* ${reservaGuardada.usuario.usuario}
           *Desde:* ${reservaGuardada.fecha_inicio} 
           *Hasta:* ${reservaGuardada.fecha_fin}
+          *Total a abonar:* $${reservaGuardada.total_tarifa}
           Adjunto el comprobante de pago.`;
 
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=5493447542330&text=${encodeURIComponent(mensaje)}`;
@@ -259,6 +267,45 @@ agregarResena(): void {
       }
     });
   }
+  calcularTarifa(): void {
+    // Control de topes para personas
+    if (this.nuevaReserva.cantidad_personas > 5) {
+      this.nuevaReserva.cantidad_personas = 5;
+    } else if (this.nuevaReserva.cantidad_personas < 1) {
+      this.nuevaReserva.cantidad_personas = 1;
+    }
 
+    if (!this.fechaInicioDate || !this.fechaFinDate || !this.nuevaReserva.alojamiento) {
+      this.tarifaEstimada = 0;
+      this.nuevaReserva.total_tarifa = 0;
+      this.nochesCalculadas = 0;
+      this.precioPorNocheCalculado = 0;
+      return;
+    }
+
+    const milisegundosPorDia = 24 * 60 * 60 * 1000;
+    // Guardamos las noches reales en la variable global
+    this.nochesCalculadas = Math.round(Math.abs((this.fechaFinDate.getTime() - this.fechaInicioDate.getTime()) / milisegundosPorDia));
+
+    if (this.nochesCalculadas > 0) {
+      const personas = this.nuevaReserva.cantidad_personas || 1;
+      const alojo = this.nuevaReserva.alojamiento;
+
+      const base = alojo.precioBase ?? alojo.precio_base ?? 0;
+      const full = alojo.precioFull ?? alojo.precio_full ?? 0;
+
+      // Guardamos el precio unitario por noche en la variable global
+      this.precioPorNocheCalculado = (personas > 2) ? full : base;
+
+      // Multiplicamos
+      this.tarifaEstimada = this.precioPorNocheCalculado * this.nochesCalculadas;
+      this.nuevaReserva.total_tarifa = this.tarifaEstimada;
+    } else {
+      this.tarifaEstimada = 0;
+      this.nuevaReserva.total_tarifa = 0;
+      this.nochesCalculadas = 0;
+      this.precioPorNocheCalculado = 0;
+    }
+  }
 
 }

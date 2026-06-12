@@ -152,8 +152,7 @@
             </div>
             <div class="reserva-field">
               <label>Personas</label>
-              <input type="number" [(ngModel)]="nuevaReserva.cantidad_personas"
-                min="1" max="10" class="reserva-input">
+              <input type="number" [(ngModel)]="nuevaReserva.cantidad_personas" (input)="calcularTarifa()" min="1" max="5" class="reserva-input">
             </div>
           </div>
 
@@ -196,7 +195,29 @@
             </div>
             <button class="chip-limpiar" (click)="limpiarFechas()">✕ Limpiar</button>
           </div>
+          <!-- sección para la reserva total -->
+<div class="reserva-tarifa-resumen" *ngIf="tarifaEstimada > 0">
+  
+  <!-- DESGLOSE DETALLADO -->
+  <div class="tarifa-desglose" style="font-size: 0.9em; opacity: 0.8; margin-bottom: 8px; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+      <span>Precio por noche ({{ nuevaReserva.cantidad_personas || 1 }} pers.):</span>
+      <span>${{ precioPorNocheCalculado | number:'1.0-0' }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+      <span>Cantidad de noches:</span>
+      <span>{{ nochesCalculadas }} {{ nochesCalculadas === 1 ? 'noche' : 'noches' }}</span>
+    </div>
+  </div>
 
+  <!-- TOTAL GENERAL -->
+  <div class="tarifa-detalle" style="display: flex; justify-content: space-between; font-weight: bold;">
+    <span class="tarifa-label">Total Estadía:</span>
+    <span class="tarifa-monto" style="font-size: 1.2em;">${{ tarifaEstimada | number:'1.0-0' }}</span>
+  </div>
+  
+  <p class="tarifa-aclaracion" style="margin-top: 6px; font-size: 0.8em;">Calculado según el número de noches y huéspedes.</p>
+</div>
           <button
             class="btn-reserva-confirmar"
             [disabled]="!nuevaReserva.fecha_inicio || !nuevaReserva.fecha_fin ||

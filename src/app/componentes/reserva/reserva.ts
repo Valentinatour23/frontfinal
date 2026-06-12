@@ -58,6 +58,7 @@ export class Reserva implements OnInit {
         *Nombre:* ${reservaGuardada.usuario.usuario}
         *Desde:* ${reservaGuardada.fecha_inicio} 
         *Hasta:* ${reservaGuardada.fecha_fin}
+        *Total a abonar:* $${reservaGuardada.total_tarifa}
         Adjunto el comprobante de pago.`;
 
         const numeroTelefono = '5493447542330';
